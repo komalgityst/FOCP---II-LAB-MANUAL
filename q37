@@ -1,0 +1,26 @@
+#include <iostream>
+#include <cstring>
+#include <cctype>
+using namespace std;
+
+int main() {
+    char username[50];
+    bool valid = true;
+
+    cout << "Enter username: ";
+    cin.getline(username, 50);
+
+    for(int i = 0; username[i] != '\0'; i++) {
+        if(!isalnum(username[i])) {   // checks letter or digit
+            valid = false;
+            break;
+        }
+    }
+
+    if(valid)
+        cout << "Username accepted";
+    else
+        cout << "Invalid username (contains space or special character)";
+
+    return 0;
+}
