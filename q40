@@ -1,0 +1,67 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+using namespace std;
+
+int main() {
+    string str, cleaned = "";
+    int words = 0, digits = 0, special = 0;
+    bool valid = true;
+
+    cout << "Enter a string: ";
+    getline(cin, str);
+
+    bool space = false;
+    for(int i = 0; i < str.length(); i++) {
+        if(str[i] != ' ') {
+            cleaned += str[i];
+            space = false;
+        }
+        else if(!space && cleaned.length() > 0) {
+            cleaned += ' ';
+            space = true;
+        }
+    }
+
+    if(cleaned[cleaned.length()-1] == ' ')
+        cleaned.erase(cleaned.length()-1);
+
+    for(int i = 0; i < cleaned.length(); i++) {
+        if(i == 0)
+            cleaned[i] = toupper(cleaned[i]);
+        else
+            cleaned[i] = tolower(cleaned[i]);
+    }
+
+    for(int i = 0; i < cleaned.length(); i++) {
+        if(isdigit(cleaned[i]))
+            digits++;
+        else if(!isalnum(cleaned[i]) && cleaned[i] != ' ')
+            special++;
+    }
+    
+    if(cleaned.length() > 0) words = 1;
+    for(int i = 0; i < cleaned.length(); i++) {
+        if(cleaned[i] == ' ')
+            words++;
+    }
+
+    for(int i = 0; i < cleaned.length(); i++) {
+        if(!isalnum(cleaned[i]) && cleaned[i] != ' ') {
+            valid = false;
+            break;
+        }
+    }
+
+    cout << "\nNormalized String: " << cleaned << endl;
+    cout << "Total Words: " << words << endl;
+    cout << "Total Digits: " << digits << endl;
+    cout << "Total Special Characters: " << special << endl;
+
+    if(valid)
+        cout << "String is valid (contains only alphabets, digits and spaces).";
+    else
+        cout << "String is invalid (contains special characters).";
+
+    return 0;
+}
